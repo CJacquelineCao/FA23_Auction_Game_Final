@@ -21,6 +21,21 @@ public class TSpaceGenerator : MonoBehaviour
             boardref.tictactoeSpaces[i].space.propertyNeeded = TagList[Random.Range(0, TagList.Count)].propertyTag;
         }
     }
+
+    public void RerollTspace(ToeSpace space)
+    {
+        int T = Random.Range(0, TagList.Count);
+        if(space.propertyNeeded == TagList[T].propertyTag)
+        {
+            RerollTspace(space);
+        }
+        else
+        {
+            space.propertyNeeded = TagList[T].propertyTag;
+            boardref.restoreColors();
+        }
+
+    }
     // Start is called before the first frame update
     void Start()
     {

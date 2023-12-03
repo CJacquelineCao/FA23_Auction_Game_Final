@@ -21,6 +21,8 @@ public class TicTacToeController : MonoBehaviour
     public Color[] playerColors;
     public Color DefaultCol;
 
+    public Color changeableColor;
+
     public List<GridSpaces> tictactoeSpaces = new List<GridSpaces>();
 
     public bool PlayerWon;
@@ -36,6 +38,8 @@ public class TicTacToeController : MonoBehaviour
 
     public GameController controller;
     public DisplayWinnerText disref;
+
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -47,7 +51,37 @@ public class TicTacToeController : MonoBehaviour
 
     }
 
+    public void checkToeSpaces()
+    {
+        for (int i = 0; i < tictactoeSpaces.Count; i++)
+        {
+            if (tictactoeSpaces[i].space.empty == true)
+            {
+                tictactoeSpaces[i].space.transform.GetChild(0).gameObject.GetComponent<Image>().color = changeableColor;
+                tictactoeSpaces[i].space.canbeChanged = true;
+            }
+            else
+            {
+                tictactoeSpaces[i].space.canbeChanged = false;
+            }
+        }
+    }
 
+    public void restoreColors()
+    {
+        for (int i = 0; i < tictactoeSpaces.Count; i++)
+        {
+            tictactoeSpaces[i].space.canbeChanged = false;
+            if (tictactoeSpaces[i].space.empty == true)
+            {
+                tictactoeSpaces[i].space.transform.GetChild(0).gameObject.GetComponent<Image>().color = DefaultCol;
+            }
+            else
+            {
+                tictactoeSpaces[i].space.transform.GetChild(0).gameObject.GetComponent<Image>().color = playerColors[tictactoeSpaces[i].whichPlayerPossessesit -1];
+            }
+        }
+    }
     public void GameStart(int playerwhoLost)
     {
         firstplayersGone = false;
@@ -174,5 +208,6 @@ public class TicTacToeController : MonoBehaviour
         {
             controller.loadWinScene(whosTurn);
         }
+
     }
 }

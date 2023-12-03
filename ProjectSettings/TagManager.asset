@@ -8,6 +8,9 @@ TagManager:
   - Canvas
   - SellZone
   - WinText
+  - Slot
+  - Item
+  - Desc
   layers:
   - Default
   - TransparentFX

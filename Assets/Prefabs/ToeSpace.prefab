@@ -94,7 +94,9 @@ MonoBehaviour:
   empty: 1
   spaceNum: 0
   propertyNeeded: 
+  canbeChanged: 0
   group: {fileID: 0}
+  tagText: {fileID: 2093071373405968258}
 --- !u!1 &1832211394127363218
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,8 +165,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: aaa
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 79b1e3d38094ce64ab21b5195161627d, type: 2}
+  m_sharedMaterial: {fileID: -704638183694262429, guid: 79b1e3d38094ce64ab21b5195161627d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

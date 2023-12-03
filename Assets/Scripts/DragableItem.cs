@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class DragableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
@@ -16,9 +17,15 @@ public class DragableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public Sprite ItemSprite;
     public string itemTag;
+    public string itemName;
+    public string itemUtil;
     public int marketPrice;
 
     public GameObject activeInventory;
+
+    public GameObject ItemDescription;
+    public GameObject ActualDesc;
+    GameController tictac;
     void Awake()
     {
         canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
@@ -26,6 +33,7 @@ public class DragableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         canvasGroup = GetComponent<CanvasGroup>();
         graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
         SellzoneRef = GameObject.FindGameObjectWithTag("SellZone");
+        tictac = FindObjectOfType<GameController>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -45,6 +53,7 @@ public class DragableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     public void OnDrag(PointerEventData eventData)
     {
         Debug.Log("Dragging");
+        ItemDescription.SetActive(false);
         _transform.position += (Vector3)eventData.delta * canvas.transform.localScale.x / canvas.scaleFactor;
 
     }
@@ -52,7 +61,7 @@ public class DragableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     {
         Debug.Log("Stopped Drag");
         canvasGroup.blocksRaycasts = true;
-
+        canvasGroup.alpha = 1f;
         var results = new List<RaycastResult>();
         graphicRaycaster.Raycast(eventData, results);
         foreach (var hit in results)
@@ -99,7 +108,24 @@ public class DragableItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        ItemDescription = tictac.Description;
+        if(ItemDescription !=null)
+        {
+            ItemDescription.SetActive(true);
+            ItemDescription.GetComponent<DescriptionHolder>().currentActiveObject = this.gameObject.GetComponent<DragableItem>();
+            ActualDesc = ItemDescription.transform.GetChild(0).gameObject;
+            Vector3 Itempos = new Vector3(gameObject.GetComponent<RectTransform>().position.x -1 , gameObject.GetComponent<RectTransform>().position.y, 0);
+            ActualDesc.transform.position = Itempos;
+            ActualDesc.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = itemName;
+            ActualDesc.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemTag;
+            ActualDesc.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = itemUtil;
+        }
         Debug.Log("MouseDown");
+
+
+
+
+
     }
     public void OnDrop(PointerEventData eventData)
     {
