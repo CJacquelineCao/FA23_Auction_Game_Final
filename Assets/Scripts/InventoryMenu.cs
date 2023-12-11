@@ -20,8 +20,8 @@ public class InventoryMenu : MonoBehaviour
     public int currentMoneyCount;
     public TMPro.TextMeshProUGUI moneyDisplay;
     private Canvas _canvas;
-
-
+    public GameController controller;
+    public bool isBroke;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +32,7 @@ public class InventoryMenu : MonoBehaviour
     public void changeMoney(int money)
     {
         currentMoneyCount += money;
+
     }
      void AssignSlot()
     {
@@ -110,6 +111,10 @@ public class InventoryMenu : MonoBehaviour
         checkMenuStatus();
         AssignSlot();
         moneyDisplay.text = "Money: " + currentMoneyCount + " shillings";
+        if (currentMoneyCount <= 0)
+        {
+            isBroke = true;
+        }
     }
 
 }

@@ -49,6 +49,11 @@ public class AllBidItemsManager : MonoBehaviour
     public bool player1Drank;
     public bool player2Drank;
 
+    public bool player1canshoot;
+    public bool player2canshoot;
+    public TMPro.TextMeshProUGUI P2shootText;
+    public TMPro.TextMeshProUGUI P1shootText;
+
     public TMPro.TextMeshProUGUI player1warningtext;
     public TMPro.TextMeshProUGUI player2warningtext;
 
@@ -93,12 +98,45 @@ public class AllBidItemsManager : MonoBehaviour
                 }
                 else
                 {
+                    P1Hand.SetActive(false);
                     player1warningtext.gameObject.SetActive(true);
                     player1warningtext.text = "You're injured, you cannot bid or raise.";
                 }
 
 
              }
+            if (player1canshoot == true)
+            {
+                P1shootText.gameObject.SetActive(true);
+            }
+            else
+            {
+                P1shootText.gameObject.SetActive(false);
+            }
+            if (player2canshoot == true)
+            {
+                P2shootText.gameObject.SetActive(true);
+            }
+            else
+            {
+                P2shootText.gameObject.SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if(player1canshoot == true)
+                {
+                    player2Cursed = true;
+                    player1canshoot = false;
+                }
+            }
+            if(Input.GetKeyDown(KeyCode.P))
+            {
+                if (player2canshoot == true)
+                {
+                    player1Cursed = true;
+                    player2canshoot = false;
+                }
+            }
             
 
             if (Input.GetKeyDown(KeyCode.Return))
@@ -119,6 +157,7 @@ public class AllBidItemsManager : MonoBehaviour
                 }
                 else
                 {
+                    P2Hand.SetActive(false);
                     player2warningtext.gameObject.SetActive(true);
                     player2warningtext.text = "You're injured, you cannot bid or raise.";
                 }
@@ -202,7 +241,7 @@ public class AllBidItemsManager : MonoBehaviour
     IEnumerator FirstbidRoutine()
     {
         timer.timer.gameObject.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         int potentialPrice = currentBidItem.startingPrice + 10;
         sentence.text = "Do I hear a " + potentialPrice + " ?";
         canRaise = true;
@@ -214,7 +253,7 @@ public class AllBidItemsManager : MonoBehaviour
     IEnumerator bidRoutine()
     {
         timer.timer.gameObject.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         int potentialPrice = currentBidItem.startingPrice + 10;
         sentence.text = "Do I hear a " + potentialPrice + " ?";
         canRaise = true;
@@ -243,6 +282,7 @@ public class AllBidItemsManager : MonoBehaviour
                 sentence.text = "Uh oh! It looks like you don't have enough money!";
                 canRaise = false;
                 yield return new WaitForSeconds(2f);
+                controller.loadWinScene(2);
                 //player 2 wins
             }
             
@@ -261,6 +301,7 @@ public class AllBidItemsManager : MonoBehaviour
                 sentence.text = "Uh oh! It looks like you don't have enough money!";
                 canRaise = false;
                 yield return new WaitForSeconds(2f);
+                controller.loadWinScene(1);
                 //player 1 wins
             }
         }

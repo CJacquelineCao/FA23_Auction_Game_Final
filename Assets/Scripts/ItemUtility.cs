@@ -51,20 +51,55 @@ public class ItemUtility : MonoBehaviour
     }
     void ToolAbility()
     {
+        if(itemref.itemName == "Hammer")
+        {
+            tictacRef.checkToeSpaces();
 
-        tictacRef.checkToeSpaces();
+        }
+        else if(itemref.itemName == "Quill")
+        {
+            tictacRef.CheckPossession();
+        }
+        else if(itemref.itemName == "Lockpick")
+        {
+            if(tictacRef.whosTurn == 1)
+            {
+                tictacRef.P2Inventory.transform.GetChild(0).GetComponent<InventoryMenu>().changeMoney(-50);
+                tictacRef.P1Inventory.transform.GetChild(0).GetComponent<InventoryMenu>().changeMoney(50);
+            }
+            else if(tictacRef.whosTurn == 2)
+            {
+                tictacRef.P1Inventory.transform.GetChild(0).GetComponent<InventoryMenu>().changeMoney(-50);
+                tictacRef.P2Inventory.transform.GetChild(0).GetComponent<InventoryMenu>().changeMoney(50);
+            }
+        }
+
     }
     void WeaponAbility()
     {
+        if(itemref.itemName == "Dagger")
+        {
+            if (tictacRef.whosTurn == 1)
+            {
+                manageref.player2Cursed = true;
+            }
+            else if (tictacRef.whosTurn == 2)
+            {
+                manageref.player1Cursed = true;
+            }
+        }
+        else if(itemref.itemName == "Crossbow")
+        {
+            if(tictacRef.whosTurn == 1)
+            {
+                manageref.player1canshoot = true;
+            }
+            else if(tictacRef.whosTurn == 2)
+            {
+                manageref.player2canshoot = true;
+            }
+        }
 
-        if (tictacRef.whosTurn == 1)
-        {
-            manageref.player2Cursed = true;
-        }
-        else if(tictacRef.whosTurn == 2)
-        {
-            manageref.player1Cursed = true;
-        }
     }
     void MagicAbility()
     {

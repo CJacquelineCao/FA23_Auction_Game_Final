@@ -13,6 +13,8 @@ public class ToeSpace : MonoBehaviour, IDropHandler, IPointerDownHandler
     public int spaceNum;
     public string propertyNeeded;
     public bool canbeChanged;
+    public bool canbeErased;
+    public GameObject SlotContainer;
     public LayoutGroup group;
 
     TicTacToeController boardref;
@@ -40,6 +42,18 @@ public class ToeSpace : MonoBehaviour, IDropHandler, IPointerDownHandler
         {
             TspaceRef.RerollTspace(this.gameObject.GetComponent<ToeSpace>());
             canbeChanged = false;
+        }
+        if(canbeErased == true)
+        {
+            canbeErased = false;
+            empty = true;
+            if(SlotContainer.transform.childCount != 0)
+            {
+                Destroy(SlotContainer.transform.GetChild(0).gameObject);
+
+            }
+            boardref.erasePossession(spaceNum);
+            boardref.restoreColors();
         }
 
     }

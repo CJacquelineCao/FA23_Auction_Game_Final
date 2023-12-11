@@ -31,4 +31,8 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(0);
 
     }
+    public void LoadHowToPlay()
+    {
+        SceneManager.LoadScene(3);
+    }
 }

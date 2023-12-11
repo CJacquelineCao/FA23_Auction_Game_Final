@@ -66,7 +66,44 @@ public class TicTacToeController : MonoBehaviour
             }
         }
     }
+    public void CheckPossession()
+    {
+        for (int i = 0; i < tictactoeSpaces.Count; i++)
+        {
+            if (tictactoeSpaces[i].space.empty == false)
+            {
+                if(whosTurn == 1)
+                {
+                    if(tictactoeSpaces[i].whichPlayerPossessesit == 2)
+                    {
+                        tictactoeSpaces[i].space.canbeErased = true;
+                        tictactoeSpaces[i].space.transform.GetChild(0).gameObject.GetComponent<Image>().color = changeableColor;
+                    }
+                    else
+                    {
+                        tictactoeSpaces[i].space.canbeErased = false;
+                    }
+                }
+                else if(whosTurn == 2)
+                {
+                    if (tictactoeSpaces[i].whichPlayerPossessesit == 1)
+                    {
+                        tictactoeSpaces[i].space.canbeErased = true;
+                        tictactoeSpaces[i].space.transform.GetChild(0).gameObject.GetComponent<Image>().color = changeableColor;
+                    }
+                    else
+                    {
+                        tictactoeSpaces[i].space.canbeErased = false;
+                    }
+                }
+            }
+        }
+    }
 
+    public void erasePossession(int SpaceNum)
+    {
+        tictactoeSpaces[SpaceNum].whichPlayerPossessesit = 0;
+    }
     public void restoreColors()
     {
         for (int i = 0; i < tictactoeSpaces.Count; i++)
@@ -207,6 +244,15 @@ public class TicTacToeController : MonoBehaviour
         if(PlayerWon == true)
         {
             controller.loadWinScene(whosTurn);
+        }
+
+        if(P1Inventory.transform.GetChild(0).GetComponent<InventoryMenu>().isBroke == true)
+        {
+            controller.loadWinScene(2);
+        }
+        else if(P2Inventory.transform.GetChild(0).GetComponent<InventoryMenu>().isBroke == true)
+        {
+            controller.loadWinScene(1);
         }
 
     }
